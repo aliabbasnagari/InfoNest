@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471718366153",
+    "project_id": "infonest-1525e",
+    "storage_bucket": "infonest-1525e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471718366153:android:3cfeccb8fc9d556d69b618",
+        "android_client_info": {
+          "package_name": "com.cloudcare.infonest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVfm0tbaL6wdxK5xj-kfo4Y0ymuXmAoGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
