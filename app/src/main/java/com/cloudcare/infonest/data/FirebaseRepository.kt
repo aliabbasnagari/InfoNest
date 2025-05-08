@@ -2,6 +2,7 @@ package com.cloudcare.infonest.data
 
 import com.cloudcare.infonest.data.model.LoggedInUser
 import com.cloudcare.infonest.data.model.Note
+import com.cloudcare.infonest.data.model.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -23,6 +24,29 @@ class FirebaseRepository {
     private val _notes = MutableStateFlow<List<Note>>(emptyList())
     val notes: StateFlow<List<Note>> = _notes
 
+    // in-memory cache of the loggedInUser object
+    var user: LoggedInUser? = null
+        private set
+
+    val isLoggedIn: Boolean
+        get() = user != null
+
+    fun isUserLoggedIn() = auth.currentUser != null
+
+    fun userId() = auth.currentUser?.uid;
+
+    init {
+        // If user credentials will be cached in local storage, it is recommended it be encrypted
+        // @see https://developer.android.com/training/articles/keystore
+        user = null
+    }
+
+    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
+        this.user = loggedInUser
+        // If user credentials will be cached in local storage, it is recommended it be encrypted
+        // @see https://developer.android.com/training/articles/keystore
+    }
+
     suspend fun login(email: String, password: String): Result<LoggedInUser> = try {
         val authResult = auth.signInWithEmailAndPassword(email, password).await()
         val firebaseUser = authResult.user
@@ -32,6 +56,7 @@ class FirebaseRepository {
                 firebaseUser.email!!,
                 firebaseUser.displayName ?: "Unknown User"
             )
+            setLoggedInUser(loggedInUser)
             Result.Success(loggedInUser)
         } else {
             Result.Error(IOException("Error logging in: User not found"))
@@ -57,6 +82,7 @@ class FirebaseRepository {
                 firebaseUser.email!!,
                 firebaseUser.displayName ?: "Unknown User"
             )
+            setLoggedInUser(loggedInUser)
             Result.Success(loggedInUser)
         } else {
             Result.Error(IOException("Error registering: Registration failed"))
@@ -116,8 +142,4 @@ class FirebaseRepository {
     } catch (e: Exception) {
         Result.Error(e)
     }
-
-    fun isUserLoggedIn() = auth.currentUser != null
-
-    fun userId() = auth.currentUser?.uid;
 }

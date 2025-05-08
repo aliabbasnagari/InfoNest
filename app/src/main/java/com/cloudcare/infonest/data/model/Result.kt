@@ -1,4 +1,4 @@
-package com.cloudcare.infonest.data
+package com.cloudcare.infonest.data.model
 
 /**
  * A generic class that holds a value with its loading status.

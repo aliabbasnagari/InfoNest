@@ -1,4 +1,4 @@
-package com.cloudcare.infonest.ui.note
+package com.cloudcare.infonest.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,7 @@ import com.cloudcare.infonest.data.FirebaseRepository
 import com.cloudcare.infonest.data.model.Note
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.cloudcare.infonest.data.Result;
+import com.cloudcare.infonest.data.model.Result;
 import com.cloudcare.infonest.data.model.LoggedInUser
 
 class NoteViewModel(private val repository: FirebaseRepository = FirebaseRepository()) :

@@ -1,20 +1,17 @@
 package com.cloudcare.infonest.ui.login
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.cloudcare.infonest.data.LoginRepository
-import com.cloudcare.infonest.data.Result
+import com.cloudcare.infonest.data.model.Result
 
 import com.cloudcare.infonest.R
+import com.cloudcare.infonest.data.FirebaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: FirebaseRepository) : ViewModel() {
 
     private val _loginForm = MutableStateFlow(LoginFormState())
     val loginFormState: StateFlow<LoginFormState> = _loginForm
