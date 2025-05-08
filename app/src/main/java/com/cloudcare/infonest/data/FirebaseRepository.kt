@@ -1,5 +1,6 @@
 package com.cloudcare.infonest.data
 
+import android.util.Log
 import com.cloudcare.infonest.data.model.LoggedInUser
 import com.cloudcare.infonest.data.model.Note
 import com.cloudcare.infonest.data.model.Result
@@ -97,7 +98,7 @@ class FirebaseRepository {
 
 
     suspend fun resetPassword(email: String): Result<Unit> = try {
-        val authResult = auth.sendPasswordResetEmail(email).await()
+        auth.sendPasswordResetEmail(email).await()
         Result.Success(Unit)
     } catch (e: Exception) {
         Result.Error(IOException("Error registering: ", e))
@@ -110,6 +111,7 @@ class FirebaseRepository {
     }
 
     fun listenToNotes() {
+        Log.d("CALLED", "listenToNotes")
         val userId = auth.currentUser?.uid ?: return
         notesListener = notesCollection
             .whereEqualTo("userId", userId)
@@ -124,6 +126,7 @@ class FirebaseRepository {
     suspend fun addNote(note: Note): Result<Unit> = try {
         val userId = auth.currentUser?.uid ?: throw IllegalStateException("User not logged in")
         notesCollection.add(note.copy(userId = userId)).await()
+        listenToNotes()
         Result.Success(Unit)
     } catch (e: Exception) {
         Result.Error(e)

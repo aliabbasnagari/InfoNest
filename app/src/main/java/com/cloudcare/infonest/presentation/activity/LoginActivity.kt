@@ -1,12 +1,9 @@
-package com.cloudcare.infonest.ui.login
+package com.cloudcare.infonest.presentation.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,10 +13,12 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.cloudcare.infonest.MainActivity
 import com.cloudcare.infonest.databinding.ActivityLoginBinding
 
 import com.cloudcare.infonest.R
+import com.cloudcare.infonest.ui.login.LoggedInUserView
+import com.cloudcare.infonest.ui.login.LoginViewModel
+import com.cloudcare.infonest.ui.login.LoginViewModelFactory
 import com.google.android.material.color.DynamicColors
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth

@@ -1,14 +1,20 @@
 package com.cloudcare.infonest.presentation.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.cloudcare.infonest.data.viewmodel.NoteViewModel
 import com.cloudcare.infonest.databinding.ActivityNoteEditorBinding
 import com.google.android.material.color.DynamicColors
 import com.cloudcare.infonest.data.model.Result
 import com.cloudcare.infonest.data.model.Note
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class NoteEditorActivity : AppCompatActivity() {
@@ -33,12 +39,24 @@ class NoteEditorActivity : AppCompatActivity() {
         } else {
             binding.btnDelete.isEnabled = false
         }
+
+        binding.btnClose.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun loadNote() {
-        viewModel.notes.value?.find { it.id == noteId }?.let { note ->
-            binding.etTitle.setText(note.title)
-            binding.etContent.setText(note.content)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val note = viewModel.notes.first { notes ->
+                    notes.any { it.id == noteId }
+                }.find { it.id == noteId }
+                note?.let {
+                    binding.etTitle.setText(it.title)
+                    binding.etContent.setText(it.content)
+                }
+            }
         }
     }
 
@@ -60,7 +78,7 @@ class NoteEditorActivity : AppCompatActivity() {
                 id = noteId!!,
                 title = title,
                 content = content,
-                userId = viewModel.notes.value?.find { it.id == noteId }?.userId ?: ""
+                userId = viewModel.notes.value.find { it.id == noteId }?.userId ?: ""
             )
             viewModel.updateNote(updatedNote) { result ->
                 handleResult(result, "Note updated")

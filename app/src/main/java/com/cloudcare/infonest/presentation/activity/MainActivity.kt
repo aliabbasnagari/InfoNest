@@ -1,20 +1,18 @@
-package com.cloudcare.infonest
+package com.cloudcare.infonest.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cloudcare.infonest.R
 import com.cloudcare.infonest.databinding.ActivityMainBinding
 import com.cloudcare.infonest.ui.adapter.NoteAdapter
-import com.cloudcare.infonest.ui.login.LoginActivity
 import com.cloudcare.infonest.data.viewmodel.NoteViewModel
-import com.cloudcare.infonest.presentation.activity.NoteEditorActivity
 import com.google.android.material.color.DynamicColors
 import kotlinx.coroutines.launch
 
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         DynamicColors.applyToActivityIfAvailable(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

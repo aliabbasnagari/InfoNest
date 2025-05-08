@@ -12,4 +12,9 @@
     <string name="login_failed">"Login failed"</string>
     <string name="registration_failed">"Registration failed"</string>
     <string name="no_account_message">I don\'t have an account</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="logout">Logout</string>
 </resources>

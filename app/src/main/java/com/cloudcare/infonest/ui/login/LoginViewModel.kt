@@ -24,6 +24,7 @@ class LoginViewModel(private val loginRepository: FirebaseRepository) : ViewMode
             try {
                 val result = loginRepository.login(email, password)
                 if (result is Result.Success) {
+                    loginRepository.listenToNotes()
                     _loginResult.value = LoginResult(
                         success = LoggedInUserView(
                             userId = result.data.userId,
@@ -51,6 +52,7 @@ class LoginViewModel(private val loginRepository: FirebaseRepository) : ViewMode
             try {
                 val result = loginRepository.register(email, password)
                 if (result is Result.Success) {
+                    loginRepository.listenToNotes()
                     _loginResult.value = LoginResult(
                         success = LoggedInUserView(
                             userId = result.data.userId,
