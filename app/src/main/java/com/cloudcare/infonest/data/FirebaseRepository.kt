@@ -118,4 +118,6 @@ class FirebaseRepository {
     }
 
     fun isUserLoggedIn() = auth.currentUser != null
+
+    fun userId() = auth.currentUser?.uid;
 }

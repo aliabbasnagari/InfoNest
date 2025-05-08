@@ -20,6 +20,7 @@ import com.cloudcare.infonest.MainActivity
 import com.cloudcare.infonest.databinding.ActivityLoginBinding
 
 import com.cloudcare.infonest.R
+import com.google.android.material.color.DynamicColors
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DynamicColors.applyToActivityIfAvailable(this)
 
         auth = Firebase.auth
         binding = ActivityLoginBinding.inflate(layoutInflater)
