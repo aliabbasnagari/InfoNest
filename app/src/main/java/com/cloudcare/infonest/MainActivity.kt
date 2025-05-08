@@ -2,6 +2,7 @@ package com.cloudcare.infonest
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         DynamicColors.applyToActivityIfAvailable(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -36,7 +37,17 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
         observeNotes()
-        setupListeners()
+
+        binding.fabAddNote.setOnClickListener {
+            startActivity(Intent(this, NoteEditorActivity::class.java))
+            Log.d("CALLED", "______################################")
+        }
+        binding.btnLogout.setOnClickListener {
+            viewModel.logout()
+            startActivity(Intent(this, LoginActivity::class.java))
+            Log.d("CALLED", "______################################")
+            finish()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -61,17 +72,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.notes.collect { notes ->
                 adapter.submitList(notes)
             }
-        }
-    }
-
-    private fun setupListeners() {
-        binding.fabAddNote.setOnClickListener {
-            startActivity(Intent(this, NoteEditorActivity::class.java))
-        }
-        binding.btnLogout.setOnClickListener {
-            viewModel.logout()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
     }
 }
