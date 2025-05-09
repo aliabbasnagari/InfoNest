@@ -21,6 +21,7 @@ class LoginViewModel(private val loginRepository: FirebaseRepository) : ViewMode
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
+            _loginResult.value = LoginResult(success = null, error = null, errorMessage = null)
             try {
                 val result = loginRepository.login(email, password)
                 if (result is Result.Success) {
@@ -49,6 +50,7 @@ class LoginViewModel(private val loginRepository: FirebaseRepository) : ViewMode
 
     fun register(email: String, password: String) {
         viewModelScope.launch {
+            _loginResult.value = LoginResult(success = null, error = null, errorMessage = null)
             try {
                 val result = loginRepository.register(email, password)
                 if (result is Result.Success) {
